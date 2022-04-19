@@ -17,15 +17,7 @@ import java.math.BigDecimal;
 public class Account {
 
     @Id
-    @SequenceGenerator(
-            name = "account_sequence",
-            sequenceName = "account_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "account_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(
@@ -43,9 +35,4 @@ public class Account {
     @JoinColumn(name = "owner_id")
     private AccountOwner owner;
 
-    public Account(String number, BigDecimal balance, AccountOwner owner) {
-        this.number = number;
-        this.balance = balance;
-        this.owner = owner;
-    }
 }

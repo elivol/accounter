@@ -3,7 +3,6 @@ package com.github.elivol.accounter.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 

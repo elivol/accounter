@@ -17,29 +17,30 @@ public class AccountService {
         this.repository = repository;
     }
 
-    public List<Account> allAccounts() {
+    public List<Account> findAll() {
         return repository.findAll();
     }
 
-    public Account getAccount(Long id) {
+    public Account findById(Long id) {
         return repository.findById(id).orElseThrow(
                 () -> new NoSuchElementException(String.format(ACCOUNT_NOT_FOUND, id))
         );
     }
 
-    public void createAccount(Account account) {
+    public void create(Account account) {
         repository.save(account);
     }
 
-    public void deleteAccount(Long id) {
+    public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new NoSuchElementException(String.format(ACCOUNT_NOT_FOUND, id));
         }
         repository.deleteById(id);
     }
 
-    public void updateAccount(Long id, Account account) {
-        Account updated = new Account(id,
+    public void update(Long id, Account account) {
+        Account updated = new Account(
+                id,
                 account.getNumber(),
                 account.getBalance(),
                 account.getOwner()

@@ -17,28 +17,28 @@ public class AccountOwnerService {
         this.repository = repository;
     }
 
-    public List<AccountOwner> allAccountOwners() {
+    public List<AccountOwner> findAll() {
         return repository.findAll();
     }
 
-    public AccountOwner getAccountOwner(Long id) {
+    public AccountOwner findById(Long id) {
         return repository.findById(id).orElseThrow(
                 () -> new NoSuchElementException(String.format(ACCOUNT_OWNER_NOT_FOUND, id))
         );
     }
 
-    public void createAccountOwner(AccountOwner accountOwner) {
+    public void create(AccountOwner accountOwner) {
         repository.save(accountOwner);
     }
 
-    public void deleteAccountOwner(Long id) {
+    public void delete(Long id) {
         if (!repository.existsById(id)) {
             throw new NoSuchElementException(String.format(ACCOUNT_OWNER_NOT_FOUND, id));
         }
         repository.deleteById(id);
     }
 
-    public void updateAccountOwner(Long id, AccountOwner accountOwner) {
+    public void update(Long id, AccountOwner accountOwner) {
         if (!repository.existsById(id)) {
             throw new NoSuchElementException(String.format(ACCOUNT_OWNER_NOT_FOUND, id));
         }
