@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.security;
+package com.github.elivol.accounter.security.user;
 
 import org.springframework.web.bind.annotation.*;
 

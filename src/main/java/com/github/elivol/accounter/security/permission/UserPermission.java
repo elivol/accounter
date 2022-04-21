@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.security;
+package com.github.elivol.accounter.security.permission;
 
 public enum UserPermission {
     ACCOUNT_READ("account:read"),

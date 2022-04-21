@@ -22,7 +22,6 @@ public class AccountOwner {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
     private String contacts;
 
 }

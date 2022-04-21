@@ -1,5 +1,7 @@
-package com.github.elivol.accounter.security;
+package com.github.elivol.accounter.security.user;
 
+import com.github.elivol.accounter.security.permission.UserRoleEntity;
+import com.github.elivol.accounter.security.permission.UserRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "app_user")
 public class User implements UserDetails {
@@ -24,8 +27,9 @@ public class User implements UserDetails {
     private Long id;
     private String email;
     private String password;
+    private String fullName;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -33,10 +37,17 @@ public class User implements UserDetails {
     )
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    private Boolean isAccountNonExpired;
-    private Boolean isAccountNonLocked;
-    private Boolean isCredentialsNonExpired;
-    private Boolean isEnabled;
+    private Boolean isAccountNonExpired = true;
+    private Boolean isAccountNonLocked = true;
+    private Boolean isCredentialsNonExpired = true;
+    private Boolean isEnabled = true;
+
+    public User(String email, String password, String fullName) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
