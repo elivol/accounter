@@ -18,8 +18,8 @@ public class TemplateController {
         return "login";
     }
 
-    @GetMapping("profile")
+    @GetMapping("logout")
     public String getProfile() {
-        return "profile";
+        return "logout";
     }
 }

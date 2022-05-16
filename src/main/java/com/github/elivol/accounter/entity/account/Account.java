@@ -1,5 +1,7 @@
-package com.github.elivol.accounter.entity;
+package com.github.elivol.accounter.entity.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.elivol.accounter.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,18 +23,13 @@ public class Account {
     private Long id;
 
     @Column(
-            nullable = false,
-            unique = true
-    )
-    private String number;
-
-    @Column(
             nullable = false
     )
     private BigDecimal balance;
 
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "owner_id")
-    private AccountOwner owner;
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
 }

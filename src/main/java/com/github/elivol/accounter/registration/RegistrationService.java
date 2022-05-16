@@ -3,15 +3,14 @@ package com.github.elivol.accounter.registration;
 import com.github.elivol.accounter.email.EmailService;
 import com.github.elivol.accounter.registration.token.ConfirmationToken;
 import com.github.elivol.accounter.registration.token.ConfirmationTokenService;
-import com.github.elivol.accounter.security.user.User;
-import com.github.elivol.accounter.security.user.UserService;
+import com.github.elivol.accounter.user.User;
+import com.github.elivol.accounter.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -26,9 +25,10 @@ public class RegistrationService {
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
 
-    public String register(RegistrationRequest request) {
+    public String register(RegistrationRequest request, String URL) {
         User user = userService.create(
                 new User(
+                        request.getUsername(),
                         request.getEmail(),
                         request.getPassword(),
                         request.getFullName()
@@ -36,6 +36,7 @@ public class RegistrationService {
         );
 
         String token = UUID.randomUUID().toString();
+
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
@@ -44,12 +45,11 @@ public class RegistrationService {
         );
         confirmationTokenService.save(confirmationToken);
 
-        // TODO: сделать link через builder
         emailService.send(
                 user.getEmail(),
                 buildEmail(
                         user.getFullName(),
-                        "http://localhost:8080/api/v1/register/confirm?token="+token,
+                        URL + "/confirm?token=" + token,
                         confirmationToken.getExpiresAt()
                 )
         );
@@ -59,13 +59,22 @@ public class RegistrationService {
 
     @Transactional
     public String confirm(String token) {
-        confirmationTokenService.validateToken(token);
+        ConfirmationToken confirmationToken = confirmationTokenService.validateToken(token);
+
+        User user = confirmationToken.getUser();
+        user.setIsAccountNonExpired(true);
+        user.setIsAccountNonLocked(true);
+        user.setIsCredentialsNonExpired(true);
+        user.setIsEnabled(true);
+
         confirmationTokenService.updateConfirmedAt(token);
+        userService.update(user);
+
         return "confirmed";
     }
 
     private String buildEmail(String name, String link, LocalDateTime expiresAt) {
-        Locale locale = Locale.getDefault(); // TODO: исправить, брать локаль пользователя, а не сервера
+        Locale locale = Locale.getDefault();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMM yyyy, HH:mm:ss", locale);
 
         Context ctx = new Context(locale);
@@ -73,7 +82,7 @@ public class RegistrationService {
         ctx.setVariable("confirmation_link", link);
         ctx.setVariable("expires_at", expiresAt.format(formatter));
 
-        return templateEngine.process("email/email_confirm", ctx);
+        return templateEngine.process("email/confirm_email", ctx);
     }
 
 }

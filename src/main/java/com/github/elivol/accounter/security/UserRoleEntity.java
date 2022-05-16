@@ -1,6 +1,5 @@
-package com.github.elivol.accounter.security.permission;
+package com.github.elivol.accounter.security;
 
-import com.github.elivol.accounter.security.permission.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

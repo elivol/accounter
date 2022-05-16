@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.security.permission;
+package com.github.elivol.accounter.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -6,12 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.github.elivol.accounter.security.permission.UserPermission.ACCOUNT_READ;
-import static com.github.elivol.accounter.security.permission.UserPermission.ACCOUNT_WRITE;
-
 public enum UserRole {
-    ADMIN(Set.of(ACCOUNT_WRITE)),
-    USER(Set.of(ACCOUNT_READ, ACCOUNT_WRITE));
+    ADMIN(Set.of(UserPermission.ACCOUNT_READ, UserPermission.ACCOUNT_WRITE, UserPermission.ACCOUNT_OWNER_WRITE, UserPermission.ACCOUNT_OWNER_READ)),
+    USER(Set.of(UserPermission.ACCOUNT_READ, UserPermission.ACCOUNT_WRITE));
 
     private final Set<UserPermission> permissions;
 

@@ -1,7 +1,7 @@
-package com.github.elivol.accounter.security.user;
+package com.github.elivol.accounter.user;
 
-import com.github.elivol.accounter.security.permission.UserRoleEntity;
-import com.github.elivol.accounter.security.permission.UserRole;
+import com.github.elivol.accounter.security.UserRoleEntity;
+import com.github.elivol.accounter.security.UserRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,13 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
+    private String username;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
     private String fullName;
 
@@ -37,15 +43,20 @@ public class User implements UserDetails {
     )
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    private Boolean isAccountNonExpired = true;
-    private Boolean isAccountNonLocked = true;
-    private Boolean isCredentialsNonExpired = true;
-    private Boolean isEnabled = true;
+    private Boolean isAccountNonExpired = false;
+    private Boolean isAccountNonLocked = false;
+    private Boolean isCredentialsNonExpired = false;
+    private Boolean isEnabled = false;
 
-    public User(String email, String password, String fullName) {
+    public User(String username, String email, String fullName) {
+        this.username = username;
         this.email = email;
-        this.password = password;
         this.fullName = fullName;
+    }
+
+    public User(String username, String email, String password, String fullName) {
+        this(username, email, fullName);
+        this.password = password;
     }
 
     @Override
@@ -64,7 +75,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
