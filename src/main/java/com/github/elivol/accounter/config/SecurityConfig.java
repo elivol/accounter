@@ -9,14 +9,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.github.elivol.accounter.security.permission.UserRole.ADMIN;
-import static com.github.elivol.accounter.security.permission.UserRole.USER;
+import static com.github.elivol.accounter.security.UserRole.ADMIN;
+
 
 @AllArgsConstructor
 @Configuration
@@ -27,21 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userService;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/api/v1/register/**").permitAll()
-                //.antMatchers("/").hasRole(USER.name())
+                .antMatchers("/", "index", "/register/**").permitAll()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .httpBasic()
                 .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/profile", true)
                 .and()
                 .logout()
                     .logoutUrl("/logout")

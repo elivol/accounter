@@ -27,7 +27,7 @@ public class ConfirmationTokenService {
         return confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
     }
 
-    public void validateToken(String token) {
+    public ConfirmationToken validateToken(String token) {
         ConfirmationToken confirmationToken = this.getByToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException(String.format(TOKEN_NOT_FOUND, token)));
@@ -39,6 +39,8 @@ public class ConfirmationTokenService {
         if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException(String.format(TOKEN_CONFIRMED, token));
         }
+
+        return confirmationToken;
     }
 
 }

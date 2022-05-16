@@ -2,8 +2,10 @@ package com.github.elivol.accounter.registration;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-@RequestMapping(path = "/api/v1/register")
+@RequestMapping(path = "/register")
 public class RegistrationController {
 
     private final RegistrationService registrationService;
@@ -13,12 +15,16 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
+    public String register(@RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
+        String URL = "http://" +
+                httpServletRequest.getServerName() + ":" +
+                httpServletRequest.getServerPort() +
+                httpServletRequest.getRequestURI();
+        return registrationService.register(request, URL);
     }
 
     @GetMapping(path = "/confirm")
-    public void confirm(@RequestParam String token) {
-        registrationService.confirm(token);
+    public String confirm(@RequestParam String token) {
+        return registrationService.confirm(token);
     }
 }
