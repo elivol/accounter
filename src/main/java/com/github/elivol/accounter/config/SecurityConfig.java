@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.github.elivol.accounter.security.UserRole.ADMIN;
 
+
 @AllArgsConstructor
 @Configuration
 @EnableWebSecurity
