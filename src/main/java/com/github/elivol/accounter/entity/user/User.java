@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.user;
+package com.github.elivol.accounter.entity.user;
 
 import com.github.elivol.accounter.security.UserRoleEntity;
 import com.github.elivol.accounter.security.UserRole;

@@ -1,7 +1,7 @@
 package com.github.elivol.accounter.entity.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.elivol.accounter.user.User;
+import com.github.elivol.accounter.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.entity.account;
 
-import com.github.elivol.accounter.user.User;
+import com.github.elivol.accounter.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

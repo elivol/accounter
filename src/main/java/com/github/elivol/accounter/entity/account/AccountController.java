@@ -3,7 +3,7 @@ package com.github.elivol.accounter.entity.account;
 import com.github.elivol.accounter.entity.operation.Operation;
 import com.github.elivol.accounter.entity.operation.OperationService;
 import com.github.elivol.accounter.security.AuthenticationService;
-import com.github.elivol.accounter.user.User;
+import com.github.elivol.accounter.entity.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
