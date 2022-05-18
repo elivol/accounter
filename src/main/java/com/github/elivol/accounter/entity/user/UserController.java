@@ -24,7 +24,7 @@ public class UserController {
 
         User user = AuthenticationService.getCurrentUser();
         Link link = linkTo(methodOn(UserController.class).user()).withSelfRel();
-        
+
         UserProfile userProfile = userService.userProfile(user);
         userProfile.add(link);
 

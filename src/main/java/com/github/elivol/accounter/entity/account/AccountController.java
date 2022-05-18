@@ -1,13 +1,19 @@
 package com.github.elivol.accounter.entity.account;
 
 import com.github.elivol.accounter.entity.operation.Operation;
+import com.github.elivol.accounter.entity.operation.OperationModelAssembler;
 import com.github.elivol.accounter.entity.operation.OperationService;
-import com.github.elivol.accounter.security.AuthenticationService;
 import com.github.elivol.accounter.entity.user.User;
+import com.github.elivol.accounter.security.AuthenticationService;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "me/accounts")
@@ -16,21 +22,28 @@ public class AccountController {
 
     private final AccountService accountService;
     private final OperationService operationService;
+    private final AccountModelAssembler accountModelAssembler;
+    private final OperationModelAssembler operationModelAssembler;
 
 
     /*
     * Actions with accounts
     * */
-
     @GetMapping
-    public List<Account> findAll() {
+    public CollectionModel<EntityModel<Account>> findAll() {
         User user = AuthenticationService.getCurrentUser();
-        return accountService.findByUser(user);
+
+        List<EntityModel<Account>> accounts = accountService.findByUser(user)
+                .stream()
+                .map(accountModelAssembler::toModel)
+                .toList();
+
+        return CollectionModel.of(accounts, linkTo(methodOn(AccountController.class).findAll()).withSelfRel());
     }
 
     @GetMapping(path = "/{id}")
-    public Account findById(@PathVariable Long id) {
-        return accountService.findById(id);
+    public EntityModel<Account> findById(@PathVariable Long id) {
+        return accountModelAssembler.toModel(accountService.findById(id));
     }
 
     @PostMapping
@@ -58,13 +71,22 @@ public class AccountController {
     * */
 
     @GetMapping(path = "/{account_id}/operations")
-    public List<Operation> findAccountOperations(@PathVariable Long account_id) {
-        return operationService.findAccountOperations(account_id);
+    public CollectionModel<EntityModel<Operation>> findAccountOperations(@PathVariable Long account_id) {
+
+        List<EntityModel<Operation>> operations = operationService.findAccountOperations(account_id)
+                .stream()
+                .map(operationModelAssembler::toModel)
+                .toList();
+
+        return CollectionModel.of(
+                operations,
+                linkTo(methodOn(AccountController.class).findAccountOperations(account_id)).withSelfRel()
+        );
     }
 
     @GetMapping(path = "/{account_id}/operations/{id}")
-    public Operation findOperationByIdAndAccount(@PathVariable Long account_id, @PathVariable Long id) {
-        return operationService.findByIdAndAccount(account_id, id);
+    public EntityModel<Operation> findOperationByIdAndAccount(@PathVariable Long account_id, @PathVariable Long id) {
+        return operationModelAssembler.toModel(operationService.findByIdAndAccount(account_id, id));
     }
 
     @PostMapping(path = "/{account_id}/operations")
