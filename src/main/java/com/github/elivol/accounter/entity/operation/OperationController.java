@@ -1,9 +1,14 @@
 package com.github.elivol.accounter.entity.operation;
 
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "/me/operations")
@@ -11,10 +16,20 @@ import java.util.List;
 public class OperationController {
 
     private final OperationService operationService;
+    private final OperationModelAssembler operationModelAssembler;
 
     @GetMapping
-    public List<Operation> findAll() {
-        return operationService.findAll();
+    public CollectionModel<EntityModel<Operation>> findAll() {
+
+        List<EntityModel<Operation>> operations = operationService.findAll()
+                .stream()
+                .map(operationModelAssembler::toModel)
+                .toList();
+
+        return CollectionModel.of(
+                operations,
+                linkTo(methodOn(OperationController.class).findAll()).withSelfRel()
+        );
     }
 
     @PutMapping(path = "/{id}")

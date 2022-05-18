@@ -25,8 +25,8 @@ public class AccountService {
         );
     }
 
-    public void create(Account account) {
-        accountRepository.save(account);
+    public Account create(Account account) {
+        return accountRepository.save(account);
     }
 
     public void delete(Long id) {
