@@ -8,6 +8,6 @@ It allows to register, create/read/update/delete accounts and operations under s
   - Spring Boot
   - Spring Data
   - Spring Security
-  - Spring HATEOAS (will commit later)
+  - Spring HATEOAS
 - PostgreSQL
 
