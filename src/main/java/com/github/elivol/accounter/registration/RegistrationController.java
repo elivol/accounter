@@ -3,6 +3,7 @@ package com.github.elivol.accounter.registration;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/register")
@@ -15,7 +16,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
+    public String register(@Valid @RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
         String URL = "http://" +
                 httpServletRequest.getServerName() + ":" +
                 httpServletRequest.getServerPort() +

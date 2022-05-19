@@ -10,6 +10,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -47,14 +48,14 @@ public class AccountController {
     }
 
     @PostMapping
-    public void create(@RequestBody Account account) {
+    public void create(@Valid @RequestBody Account account) {
         User user = AuthenticationService.getCurrentUser();
         account.setUser(user);
         accountService.create(account);
     }
 
     @PutMapping(path = "/{id}")
-    public void update(@PathVariable Long id, @RequestBody Account account) {
+    public void update(@PathVariable Long id, @Valid @RequestBody Account account) {
         User user = AuthenticationService.getCurrentUser();
         account.setUser(user);
         accountService.update(id, account);
@@ -90,7 +91,7 @@ public class AccountController {
     }
 
     @PostMapping(path = "/{account_id}/operations")
-    public void createOperation(@PathVariable Long account_id, @RequestBody Operation operation) {
+    public void createOperation(@PathVariable Long account_id, @Valid @RequestBody Operation operation) {
         operationService.create(account_id, operation);
     }
 
