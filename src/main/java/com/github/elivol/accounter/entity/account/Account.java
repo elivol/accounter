@@ -28,7 +28,6 @@ public class Account {
             nullable = false
     )
     @NotNull
-    @PositiveOrZero
     private BigDecimal balance;
 
     @ManyToOne(optional = false, cascade = CascadeType.MERGE)
