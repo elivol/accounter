@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -24,8 +26,9 @@ public class Operation {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // TODO: валидация поля, только положительное значение
     @Column(nullable = false)
+    @NotNull
+    @PositiveOrZero
     private BigDecimal amount;
 
     @Column(nullable = false)

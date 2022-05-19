@@ -1,7 +1,7 @@
 package com.github.elivol.accounter.entity.user;
 
-import com.github.elivol.accounter.security.UserRoleEntity;
 import com.github.elivol.accounter.security.UserRole;
+import com.github.elivol.accounter.security.UserRoleEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
