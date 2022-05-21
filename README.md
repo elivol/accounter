@@ -17,7 +17,7 @@ For postgres I use [official docker image](https://hub.docker.com/_/postgres).</
 As mail server I use [maildev docker image](https://hub.docker.com/r/maildev/maildev)
 
 # How to use
-First, you need to reigister (GET method /register), confirm your email and log in to system.</br>
+First, you need to reigister (POST method /register), confirm your email and log in to system.</br>
 Then you can start from GET method /me, this will return your username, email and fullname.</br>
 From /me you can go to 
 - /accounts 
@@ -27,3 +27,5 @@ From /me you can go to
 - /accounts/{id}/operations/{id}</br>
 
 and perform CRUD operations with this account and operation entities.
+
+P.S. detailed description will be added later 🙃
