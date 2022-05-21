@@ -25,6 +25,7 @@ public class RegistrationService {
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
 
+    @Transactional
     public String register(RegistrationRequest request, String URL) {
         User user = userService.create(
                 new User(

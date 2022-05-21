@@ -3,6 +3,7 @@ package com.github.elivol.accounter.entity.account;
 import com.github.elivol.accounter.entity.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,6 +30,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!accountRepository.existsById(id)) {
             throw new NoSuchElementException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id));
@@ -36,12 +38,14 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Account account) {
         Account existingAccount = this.findById(id);
         existingAccount.setBalance(account.getBalance());
         accountRepository.save(existingAccount);
     }
 
+    @Transactional
     public void updateBalance(Long id, BigDecimal newBalance) {
         Account account = this.findById(id);
         account.setBalance(newBalance);

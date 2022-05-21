@@ -4,6 +4,7 @@ import com.github.elivol.accounter.entity.account.Account;
 import com.github.elivol.accounter.entity.account.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class OperationService {
     private final AccountService accountService;
 
     // TODO: использоваь limit
+    @Transactional
     public List<Operation> findAccountOperations(Long account_id) {
         Account account = accountService.findById(account_id);
         return operationRepository.findByAccount(account);
@@ -28,6 +30,7 @@ public class OperationService {
         return operationRepository.findAll();
     }
 
+    @Transactional
     public Operation findByIdAndAccount(Long account_id, Long id) {
         Account account = accountService.findById(account_id);
         return operationRepository.findByAccountAndId(account, id).orElseThrow(
@@ -41,6 +44,7 @@ public class OperationService {
         );
     }
 
+    @Transactional
     public void create(Long account_id, Operation operation) {
         Account account = accountService.findById(account_id);
         operation.setAccount(account);
@@ -56,6 +60,7 @@ public class OperationService {
         accountService.updateBalance(account_id, newBalance);
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!operationRepository.existsById(id)) {
             throw new NoSuchElementException(String.format(OPERATION_WITH_ID_NOT_FOUND, id));
@@ -63,6 +68,7 @@ public class OperationService {
         operationRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Operation operation) {
 
         Operation existingOperation = this.findById(id);
