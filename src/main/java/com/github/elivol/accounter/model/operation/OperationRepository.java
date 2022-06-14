@@ -1,6 +1,6 @@
-package com.github.elivol.accounter.entity.operation;
+package com.github.elivol.accounter.model.operation;
 
-import com.github.elivol.accounter.entity.account.Account;
+import com.github.elivol.accounter.model.account.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.entity.user;
+package com.github.elivol.accounter.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

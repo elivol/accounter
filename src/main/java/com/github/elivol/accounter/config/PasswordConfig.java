@@ -3,8 +3,8 @@ package com.github.elivol.accounter.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class PasswordConfig {
@@ -14,4 +14,8 @@ public class PasswordConfig {
         return new BCryptPasswordEncoder(10);
     }
 
+    @Bean
+    public WebClient.Builder webClientBuilder(){
+        return WebClient.builder();
+    }
 }

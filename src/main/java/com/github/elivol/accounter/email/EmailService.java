@@ -12,9 +12,9 @@ import javax.mail.internet.MimeMessage;
 public class EmailService implements EmailSender {
 
     private final JavaMailSender javaMailSender;
-    @Value("${messaging.emailconfirm.from}")
+    @Value("${email-confirm.from}")
     private String from;
-    @Value("${messaging.emailconfirm.subject}")
+    @Value("${email-confirm.subject}")
     private String subject;
 
     public EmailService(JavaMailSender javaMailSender) {

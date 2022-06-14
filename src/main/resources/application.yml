@@ -35,12 +35,13 @@ spring:
           timeout: 3000
           writetimeout: 5000
 
-  messages:
-    basename: messages, email
-    encoding: UTF-8
-    fallback-to-system-locale: true
 
-messaging:
-  emailconfirm:
-    from: service@accounterproject.com
-    subject: Confirm your email
+email-confirm:
+  from: service@accounterproject.com
+  subject: Confirm your email
+
+
+external-api:
+  exchange-rate:
+    uri: https://v6.exchangerate-api.com/v6/{YOUR-API-KEY}/latest/{CODE}
+    secret-key: a862201dd4d4a697ef562bc8

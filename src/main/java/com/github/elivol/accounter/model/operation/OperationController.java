@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.entity.operation;
+package com.github.elivol.accounter.model.operation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;

@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.entity.user;
+package com.github.elivol.accounter.model.user;
 
 import com.github.elivol.accounter.security.UserRole;
 import com.github.elivol.accounter.security.UserRoleEntity;
@@ -43,10 +43,10 @@ public class UserService implements UserDetailsService {
             throw new IllegalStateException(String.format(USER_WITH_EMAIL_ALREADY_EXISTS, user.getEmail()));
         }
 
-        userRoleRepository.findByRole(UserRole.USER)
+        userRoleRepository.findByRole(UserRole.ADMIN) // TODO: change to USER
                 .ifPresentOrElse(
                         role -> user.getRoles().add(role),
-                        () -> user.getRoles().add(new UserRoleEntity(UserRole.USER))
+                        () -> user.getRoles().add(new UserRoleEntity(UserRole.ADMIN)) // TODO: change to USER
                 );
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

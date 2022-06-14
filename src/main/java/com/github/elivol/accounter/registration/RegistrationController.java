@@ -17,10 +17,7 @@ public class RegistrationController {
 
     @PostMapping
     public String register(@Valid @RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
-        String URL = "http://" +
-                httpServletRequest.getServerName() + ":" +
-                httpServletRequest.getServerPort() +
-                httpServletRequest.getRequestURI();
+        String URL = httpServletRequest.getRequestURL().toString();
         return registrationService.register(request, URL);
     }
 

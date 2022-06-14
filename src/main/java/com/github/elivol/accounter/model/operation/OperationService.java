@@ -1,7 +1,7 @@
-package com.github.elivol.accounter.entity.operation;
+package com.github.elivol.accounter.model.operation;
 
-import com.github.elivol.accounter.entity.account.Account;
-import com.github.elivol.accounter.entity.account.AccountService;
+import com.github.elivol.accounter.model.account.Account;
+import com.github.elivol.accounter.model.account.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,6 @@ public class OperationService {
     private final OperationRepository operationRepository;
     private final AccountService accountService;
 
-    // TODO: использоваь limit
     @Transactional
     public List<Operation> findAccountOperations(Long account_id) {
         Account account = accountService.findById(account_id);

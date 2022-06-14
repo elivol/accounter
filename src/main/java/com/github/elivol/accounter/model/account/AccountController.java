@@ -1,9 +1,9 @@
-package com.github.elivol.accounter.entity.account;
+package com.github.elivol.accounter.model.account;
 
-import com.github.elivol.accounter.entity.operation.Operation;
-import com.github.elivol.accounter.entity.operation.OperationModelAssembler;
-import com.github.elivol.accounter.entity.operation.OperationService;
-import com.github.elivol.accounter.entity.user.User;
+import com.github.elivol.accounter.model.operation.Operation;
+import com.github.elivol.accounter.model.operation.OperationModelAssembler;
+import com.github.elivol.accounter.model.operation.OperationService;
+import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.security.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
@@ -44,7 +44,8 @@ public class AccountController {
 
     @GetMapping(path = "/{id}")
     public EntityModel<Account> findById(@PathVariable Long id) {
-        return accountModelAssembler.toModel(accountService.findById(id));
+        Account account = accountService.findById(id);
+        return accountModelAssembler.toModel(account);
     }
 
     @PostMapping

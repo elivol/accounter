@@ -1,6 +1,7 @@
-package com.github.elivol.accounter.entity.operation;
+package com.github.elivol.accounter.model.operation;
 
-import com.github.elivol.accounter.entity.account.AccountController;
+import com.github.elivol.accounter.model.HateoasModelRelations;
+import com.github.elivol.accounter.model.account.AccountController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,9 @@ public class OperationModelAssembler implements RepresentationModelAssembler<Ope
                         operation.getAccount().getId(),
                         operation.getId())
                 ).withSelfRel(),
-                linkTo(methodOn(AccountController.class).findAccountOperations(operation.getAccount().getId())).withRel("account operations"),
-                linkTo(methodOn(OperationController.class).findAll()).withRel("all operations")
+                linkTo(methodOn(AccountController.class).findAccountOperations(operation.getAccount().getId()))
+                        .withRel(HateoasModelRelations.ACCOUNT_OPERATIONS),
+                linkTo(methodOn(OperationController.class).findAll()).withRel(HateoasModelRelations.ALL_OPERATIONS)
         );
     }
 }

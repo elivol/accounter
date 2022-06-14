@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.registration.token;
 
-import com.github.elivol.accounter.entity.user.User;
+import com.github.elivol.accounter.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
