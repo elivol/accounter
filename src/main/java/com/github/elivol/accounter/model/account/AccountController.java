@@ -1,16 +1,21 @@
 package com.github.elivol.accounter.model.account;
 
+import com.github.elivol.accounter.model.account.stats.AccountStats;
+import com.github.elivol.accounter.model.account.stats.AccountStatsAssembler;
+import com.github.elivol.accounter.model.account.stats.AccountStatsService;
 import com.github.elivol.accounter.model.operation.Operation;
 import com.github.elivol.accounter.model.operation.OperationModelAssembler;
 import com.github.elivol.accounter.model.operation.OperationService;
 import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.security.AuthenticationService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -25,6 +30,8 @@ public class AccountController {
     private final OperationService operationService;
     private final AccountModelAssembler accountModelAssembler;
     private final OperationModelAssembler operationModelAssembler;
+    private final AccountStatsService accountStatsService;
+    private final AccountStatsAssembler accountStatsAssembler;
 
 
     /*
@@ -94,6 +101,19 @@ public class AccountController {
     @PostMapping(path = "/{account_id}/operations")
     public void createOperation(@PathVariable Long account_id, @Valid @RequestBody Operation operation) {
         operationService.create(account_id, operation);
+    }
+
+
+    /*
+    * Actions with account statistics
+    * */
+    @GetMapping(path = "/{account_id}/stats")
+    public EntityModel<AccountStats> stats(@PathVariable Long account_id,
+                                           @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+                                           @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+
+        AccountStats stats = accountStatsService.stats(account_id, from, to);
+        return accountStatsAssembler.toModel(stats);
     }
 
 }

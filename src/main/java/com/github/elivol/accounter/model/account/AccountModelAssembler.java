@@ -16,7 +16,7 @@ public class AccountModelAssembler implements RepresentationModelAssembler<Accou
         return EntityModel.of(
                 account,
                 linkTo(methodOn(AccountController.class).findById(account.getId())).withSelfRel(),
-                linkTo(methodOn(AccountController.class).findAll()).withRel(HateoasModelRelations.ACCOUNTS)
-        );
+                linkTo(methodOn(AccountController.class).findAll()).withRel(HateoasModelRelations.ACCOUNTS),
+                linkTo(methodOn(AccountController.class).stats(null, null, null)).withRel(HateoasModelRelations.ONE_ACCOUNT_STATISTICS));
     }
 }

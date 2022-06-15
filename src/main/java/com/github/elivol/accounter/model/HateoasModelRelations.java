@@ -6,4 +6,5 @@ public class HateoasModelRelations {
     public static String ALL_OPERATIONS = "all operations";
     public static String ACCOUNT_OPERATIONS = "account operations";
     public static String ONE_ACCOUNT_OPERATION = "one account operation";
+    public static String ONE_ACCOUNT_STATISTICS = "one account statistics";
 }

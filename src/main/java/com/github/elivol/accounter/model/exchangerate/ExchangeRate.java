@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Map;
 
 @Getter
@@ -16,7 +16,7 @@ public class ExchangeRate {
 
     private String result;
 
-    private Date timeLastUpdate;
+    private Instant timeLastUpdate;
 
     @JsonProperty("base_code")
     private String baseCode;
@@ -24,15 +24,15 @@ public class ExchangeRate {
     @JsonProperty("conversion_rates")
     private Map<String, Double> conversionRates;
 
+
     @JsonProperty("time_last_update")
-    @JsonFormat(pattern = "EEE, dd MMM yyyy HH:mm:ss Z")
-    public Date getTimeLastUpdate() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, dd MMM yyyy HH:mm:ss (Z)", timezone = "+0000")
+    public Instant getTimeLastUpdate() {
         return timeLastUpdate;
     }
 
-    @JsonProperty("time_last_update_utc")
-    public void setTimeLastUpdate(Date timeLastUpdate) {
+    @JsonProperty("time_last_update_unix")
+    public void setTimeLastUpdate(Instant timeLastUpdate) {
         this.timeLastUpdate = timeLastUpdate;
     }
-
 }

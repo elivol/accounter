@@ -46,6 +46,10 @@ public class AccountService {
         return account;
     }
 
+    public BigDecimal getCurrentBalance(Long id) {
+        return accountRepository.getCurrentBalance(id).orElse(BigDecimal.ZERO);
+    }
+
     @Transactional
     public Account create(Account account) {
         String currencyString = account.getCurrencyString().toUpperCase();

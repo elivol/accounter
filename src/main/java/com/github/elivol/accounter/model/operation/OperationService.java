@@ -79,4 +79,9 @@ public class OperationService {
         operationRepository.save(existingOperation);
     }
 
+    public List<Operation> findByAccountAndPeriod(Long account_id, LocalDateTime from, LocalDateTime to) {
+        Account account = accountService.findById(account_id);
+        return operationRepository.findByAccountAndPeriod(account, from, to);
+    }
+
 }
