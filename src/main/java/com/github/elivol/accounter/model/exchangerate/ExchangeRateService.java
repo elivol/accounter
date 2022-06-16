@@ -1,5 +1,6 @@
 package com.github.elivol.accounter.model.exchangerate;
 
+import com.github.elivol.accounter.exception.ExchangeRateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,25 +26,27 @@ public class ExchangeRateService {
         ExchangeFilterFunction errorResponseFilter = ExchangeFilterFunction
                 .ofResponseProcessor(ExchangeRateService::exchangeFilterResponseProcessor);
 
-        return webClientBuilder.filter(errorResponseFilter)
+        ExchangeRate rate = webClientBuilder.filter(errorResponseFilter)
                 .build()
                 .get()
                 .uri(uri, exchangeRateSecret, baseCurrency)
                 .retrieve()
-                //.onStatus(HttpStatus::is4xxClientError, response -> Mono.empty())
-                .bodyToMono(ExchangeRate.class)
+//                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(ExchangeRateException::new))
+//                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(ExchangeRateException::new))
+                .bodyToMono(ExchangeRateResponse.class)
                 .block();
+        return rate;
     }
 
     private static Mono<ClientResponse> exchangeFilterResponseProcessor(ClientResponse response) {
         HttpStatus status = response.statusCode();
-        if (status.is4xxClientError()) {
-            return response.bodyToMono(ExchangeRate.class).flatMap(o -> Mono.empty());
+        if (status.is4xxClientError() || status.is5xxServerError()) {
+
+            return response
+                    .bodyToMono(ExchangeRateErrorResponse.class)
+                    .flatMap(o -> Mono.error(new ExchangeRateException(o.getResult(), o.getErrorType())));
         }
-        /*if (status.is5xxServerError()) {
-            return response.bodyToMono(String.class)
-                    .flatMap(body -> Mono.error(new IllegalStateException(body)));
-        }*/
+
         return Mono.just(response);
     }
 

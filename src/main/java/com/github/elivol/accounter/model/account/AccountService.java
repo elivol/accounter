@@ -1,7 +1,9 @@
 package com.github.elivol.accounter.model.account;
 
 import com.github.elivol.accounter.admin.currency.AppCurrencyService;
+import com.github.elivol.accounter.exception.ExchangeRateException;
 import com.github.elivol.accounter.model.exchangerate.ExchangeRate;
+import com.github.elivol.accounter.model.exchangerate.ExchangeRateErrorResponse;
 import com.github.elivol.accounter.model.exchangerate.ExchangeRateService;
 import com.github.elivol.accounter.model.user.User;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,11 @@ public class AccountService {
     private final ExchangeRateService exchangeRateService;
 
     private ExchangeRate rate(String baseCurrency) {
-        return exchangeRateService.rate(baseCurrency);
+        try {
+            return exchangeRateService.rate(baseCurrency);
+        } catch (ExchangeRateException ex) {
+            return new ExchangeRateErrorResponse(ex.getMessage(), ex.getErrorType());
+        }
     }
 
     public List<Account> findByUser(User owner) {
