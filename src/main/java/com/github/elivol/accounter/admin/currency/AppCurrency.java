@@ -26,7 +26,11 @@ public class AppCurrency {
     private String currencyCode;
 
     public AppCurrency(String currencyCode) {
-        this.currencyCode = currencyCode;
+        this.currencyCode = currencyCode.toUpperCase();
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode.toUpperCase();
     }
 
     @Override

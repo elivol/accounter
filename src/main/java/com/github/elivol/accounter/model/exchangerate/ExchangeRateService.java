@@ -26,22 +26,19 @@ public class ExchangeRateService {
         ExchangeFilterFunction errorResponseFilter = ExchangeFilterFunction
                 .ofResponseProcessor(ExchangeRateService::exchangeFilterResponseProcessor);
 
-        ExchangeRate rate = webClientBuilder.filter(errorResponseFilter)
+        return webClientBuilder.filter(errorResponseFilter)
                 .build()
                 .get()
                 .uri(uri, exchangeRateSecret, baseCurrency)
                 .retrieve()
-//                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(ExchangeRateException::new))
-//                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(ExchangeRateException::new))
                 .bodyToMono(ExchangeRateResponse.class)
                 .block();
-        return rate;
     }
 
     private static Mono<ClientResponse> exchangeFilterResponseProcessor(ClientResponse response) {
+
         HttpStatus status = response.statusCode();
         if (status.is4xxClientError() || status.is5xxServerError()) {
-
             return response
                     .bodyToMono(ExchangeRateErrorResponse.class)
                     .flatMap(o -> Mono.error(new ExchangeRateException(o.getResult(), o.getErrorType())));
