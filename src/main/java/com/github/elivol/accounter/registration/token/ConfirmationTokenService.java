@@ -1,5 +1,7 @@
 package com.github.elivol.accounter.registration.token;
 
+import com.github.elivol.accounter.exception.ConfirmationTokenNotAvailableException;
+import com.github.elivol.accounter.exception.ConfirmationTokenNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +32,14 @@ public class ConfirmationTokenService {
     public ConfirmationToken validateToken(String token) {
         ConfirmationToken confirmationToken = this.getByToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException(String.format(TOKEN_NOT_FOUND, token)));
+                        new ConfirmationTokenNotFoundException(String.format(TOKEN_NOT_FOUND, token)));
 
         if (confirmationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException(String.format(TOKEN_EXPIRED, token));
+            throw new ConfirmationTokenNotAvailableException(String.format(TOKEN_EXPIRED, token));
         }
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException(String.format(TOKEN_CONFIRMED, token));
+            throw new ConfirmationTokenNotAvailableException(String.format(TOKEN_CONFIRMED, token));
         }
 
         return confirmationToken;

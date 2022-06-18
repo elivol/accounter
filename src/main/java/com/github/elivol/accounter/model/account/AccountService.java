@@ -1,6 +1,8 @@
 package com.github.elivol.accounter.model.account;
 
 import com.github.elivol.accounter.admin.currency.AppCurrencyService;
+import com.github.elivol.accounter.exception.CurrencyIsNotSupportedException;
+import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.exception.ExchangeRateException;
 import com.github.elivol.accounter.model.exchangerate.ExchangeRate;
 import com.github.elivol.accounter.model.exchangerate.ExchangeRateErrorResponse;
@@ -12,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private static final String ACCOUNT_WITH_ID_NOT_FOUND = "Account with id %d not found";
+    public static final String CURRENCY_IS_NOT_SUPPORTED = "Currency %s is not supported";
     private final AccountRepository accountRepository;
     private final AppCurrencyService appCurrencyService;
     private final ExchangeRateService exchangeRateService;
@@ -44,7 +46,7 @@ public class AccountService {
 
     public Account findById(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(
-                () -> new NoSuchElementException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id))
+                () -> new EntityNotFoundException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id))
         );
 
         account.setCurrencyString(account.getCurrency().getCurrencyCode());
@@ -63,7 +65,7 @@ public class AccountService {
                 .anyMatch(c -> c.getCurrencyCode().equalsIgnoreCase(currencyString));
 
         if (!isSupported){
-            throw new IllegalStateException(String.format("Currency %s is not supported", currencyString));
+            throw new CurrencyIsNotSupportedException(String.format(CURRENCY_IS_NOT_SUPPORTED, currencyString));
         }
 
         account.setCurrency(appCurrencyService.findByCurrencyCode(currencyString));
@@ -73,7 +75,7 @@ public class AccountService {
     @Transactional
     public void delete(Long id) {
         if (!accountRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id));
+            throw new EntityNotFoundException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id));
         }
         accountRepository.deleteById(id);
     }

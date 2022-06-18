@@ -1,5 +1,6 @@
 package com.github.elivol.accounter.model.operation;
 
+import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.model.account.Account;
 import com.github.elivol.accounter.model.account.AccountService;
 import lombok.AllArgsConstructor;
@@ -33,13 +34,13 @@ public class OperationService {
     public Operation findByIdAndAccount(Long account_id, Long id) {
         Account account = accountService.findById(account_id);
         return operationRepository.findByAccountAndId(account, id).orElseThrow(
-                () -> new NoSuchElementException(String.format(OPERATION_WITH_ID_NOT_FOUND, id))
+                () -> new EntityNotFoundException(String.format(OPERATION_WITH_ID_NOT_FOUND, id))
         );
     }
 
     public Operation findById(Long id) {
         return operationRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException(String.format(OPERATION_WITH_ID_NOT_FOUND, id))
+                () -> new EntityNotFoundException(String.format(OPERATION_WITH_ID_NOT_FOUND, id))
         );
     }
 
@@ -62,7 +63,7 @@ public class OperationService {
     @Transactional
     public void delete(Long id) {
         if (!operationRepository.existsById(id)) {
-            throw new NoSuchElementException(String.format(OPERATION_WITH_ID_NOT_FOUND, id));
+            throw new EntityNotFoundException(String.format(OPERATION_WITH_ID_NOT_FOUND, id));
         }
         operationRepository.deleteById(id);
     }

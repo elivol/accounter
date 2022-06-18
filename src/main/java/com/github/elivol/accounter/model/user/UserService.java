@@ -1,5 +1,7 @@
 package com.github.elivol.accounter.model.user;
 
+import com.github.elivol.accounter.exception.EntityAlreadyPresentException;
+import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.security.UserRole;
 import com.github.elivol.accounter.security.UserRoleEntity;
 import com.github.elivol.accounter.security.UserRoleRepository;
@@ -26,7 +28,7 @@ public class UserService implements UserDetailsService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(
-                () -> new NoSuchElementException(String.format(USER_WITH_USERNAME_NOT_FOUND, username))
+                () -> new EntityNotFoundException(String.format(USER_WITH_USERNAME_NOT_FOUND, username))
         );
     }
 
@@ -36,11 +38,11 @@ public class UserService implements UserDetailsService {
         boolean userExistsByUsername = userRepository.findByUsername(user.getUsername()).isPresent();
 
         if (userExistsByUsername) {
-            throw new IllegalStateException(String.format(USER_WITH_USERNAME_ALREADY_EXISTS, user.getUsername()));
+            throw new EntityAlreadyPresentException(String.format(USER_WITH_USERNAME_ALREADY_EXISTS, user.getUsername()));
         }
 
         if (userExistsByEmail) {
-            throw new IllegalStateException(String.format(USER_WITH_EMAIL_ALREADY_EXISTS, user.getEmail()));
+            throw new EntityAlreadyPresentException(String.format(USER_WITH_EMAIL_ALREADY_EXISTS, user.getEmail()));
         }
 
         userRoleRepository.findByRole(UserRole.ADMIN) // TODO: change to USER
@@ -58,7 +60,7 @@ public class UserService implements UserDetailsService {
         boolean userExistsByUsername = userRepository.findByUsername(user.getUsername()).isPresent();
 
         if (!userExistsByUsername) {
-            throw new IllegalStateException(String.format(USER_WITH_USERNAME_NOT_FOUND, user.getUsername()));
+            throw new EntityNotFoundException(String.format(USER_WITH_USERNAME_NOT_FOUND, user.getUsername()));
         }
 
         return userRepository.save(user);

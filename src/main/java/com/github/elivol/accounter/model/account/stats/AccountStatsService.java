@@ -23,7 +23,7 @@ public class AccountStatsService {
     private final AccountService accountService;
 
     @Transactional
-    public AccountStats stats(Long account_id, LocalDateTime from, LocalDateTime to) {
+    public AccountStats stats(Long accountId, LocalDateTime from, LocalDateTime to) {
 
         if (to == null) {
             to = LocalDateTime.now();
@@ -33,7 +33,7 @@ public class AccountStatsService {
             from = to.minusMonths(1L);
         }
 
-        List<Operation> data = operationService.findByAccountAndPeriod(account_id, from, to);
+        List<Operation> data = operationService.findByAccountAndPeriod(accountId, from, to);
 
         BigDecimal[] income = data.stream()
                 .filter(Operation::getIsIncoming)
@@ -51,7 +51,7 @@ public class AccountStatsService {
                 "incoming", income[0].divide(income[1], RoundingMode.HALF_UP),
                 "outcoming", outcome[0].divide(outcome[1], RoundingMode.HALF_UP));
 
-        BigDecimal balance = accountService.getCurrentBalance(account_id);
+        BigDecimal balance = accountService.getCurrentBalance(accountId);
 
         return new AccountStats(from, to, income[0], outcome[0], average, balance);
 

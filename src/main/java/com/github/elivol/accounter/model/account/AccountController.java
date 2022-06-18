@@ -80,27 +80,29 @@ public class AccountController {
     * */
 
     @GetMapping(path = "/{account_id}/operations")
-    public CollectionModel<EntityModel<Operation>> findAccountOperations(@PathVariable Long account_id) {
+    public CollectionModel<EntityModel<Operation>> findAccountOperations(@PathVariable("account_id") Long accountId) {
 
-        List<EntityModel<Operation>> operations = operationService.findAccountOperations(account_id)
+        List<EntityModel<Operation>> operations = operationService.findAccountOperations(accountId)
                 .stream()
                 .map(operationModelAssembler::toModel)
                 .toList();
 
         return CollectionModel.of(
                 operations,
-                linkTo(methodOn(AccountController.class).findAccountOperations(account_id)).withSelfRel()
+                linkTo(methodOn(AccountController.class).findAccountOperations(accountId)).withSelfRel()
         );
     }
 
     @GetMapping(path = "/{account_id}/operations/{id}")
-    public EntityModel<Operation> findOperationByIdAndAccount(@PathVariable Long account_id, @PathVariable Long id) {
-        return operationModelAssembler.toModel(operationService.findByIdAndAccount(account_id, id));
+    public EntityModel<Operation> findOperationByIdAndAccount(
+            @PathVariable("account_id") Long accountId,
+            @PathVariable Long id) {
+        return operationModelAssembler.toModel(operationService.findByIdAndAccount(accountId, id));
     }
 
     @PostMapping(path = "/{account_id}/operations")
-    public void createOperation(@PathVariable Long account_id, @Valid @RequestBody Operation operation) {
-        operationService.create(account_id, operation);
+    public void createOperation(@PathVariable("account_id") Long accountId, @Valid @RequestBody Operation operation) {
+        operationService.create(accountId, operation);
     }
 
 
@@ -108,11 +110,11 @@ public class AccountController {
     * Actions with account statistics
     * */
     @GetMapping(path = "/{account_id}/stats")
-    public EntityModel<AccountStats> stats(@PathVariable Long account_id,
+    public EntityModel<AccountStats> stats(@PathVariable("account_id") Long accountId,
                                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
                                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
 
-        AccountStats stats = accountStatsService.stats(account_id, from, to);
+        AccountStats stats = accountStatsService.stats(accountId, from, to);
         return accountStatsAssembler.toModel(stats);
     }
 

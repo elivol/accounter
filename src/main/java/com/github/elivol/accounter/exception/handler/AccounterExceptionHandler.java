@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class AccounterExceptionHandler {
 
 /*
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @ExceptionHandler(ExchangeRateResponseError.class)
-    public Optional<ExchangeRate> handleExchangeRateResponseError() {
-        return Optional.empty();
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Oops, smth wrong!")
+    @ExceptionHandler(Exception.class)
+    public void defaultHandler(Exception ex) {
+
     }
 */
+
 }
