@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode
 public class RegistrationRequest {
 
-    @Pattern(regexp = "^[\\w_]{2,15}$")
+    @Pattern(regexp = "^[\\w_]{2,15}$", message = "must be from 2 to 15 symbols (digits, characters, underscore)")
     private String username;
 
     @NotEmpty
