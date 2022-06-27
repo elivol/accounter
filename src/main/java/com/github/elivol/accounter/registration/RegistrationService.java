@@ -1,10 +1,10 @@
 package com.github.elivol.accounter.registration;
 
-import com.github.elivol.accounter.email.EmailService;
-import com.github.elivol.accounter.registration.token.ConfirmationToken;
-import com.github.elivol.accounter.registration.token.ConfirmationTokenService;
+import com.github.elivol.accounter.email.EmailSender;
 import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.model.user.UserService;
+import com.github.elivol.accounter.registration.token.ConfirmationToken;
+import com.github.elivol.accounter.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class RegistrationService {
 
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
-    private final EmailService emailService;
+    private final EmailSender emailSender;
     private final TemplateEngine templateEngine;
 
     @Transactional
@@ -46,7 +46,7 @@ public class RegistrationService {
         );
         confirmationTokenService.save(confirmationToken);
 
-        emailService.send(
+        emailSender.send(
                 user.getEmail(),
                 buildEmail(
                         user.getFullName(),
