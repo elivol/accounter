@@ -45,10 +45,10 @@ public class UserService implements UserDetailsService {
             throw new EntityAlreadyPresentException(String.format(USER_WITH_EMAIL_ALREADY_EXISTS, user.getEmail()));
         }
 
-        userRoleRepository.findByRole(UserRole.ADMIN) // TODO: change to USER
+        userRoleRepository.findByRole(UserRole.USER)
                 .ifPresentOrElse(
                         role -> user.getRoles().add(role),
-                        () -> user.getRoles().add(new UserRoleEntity(UserRole.ADMIN)) // TODO: change to USER
+                        () -> user.getRoles().add(new UserRoleEntity(UserRole.USER))
                 );
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
