@@ -62,13 +62,6 @@ public class AccountController {
         accountService.create(account);
     }
 
-    @PutMapping(path = "/{id}")
-    public void update(@PathVariable Long id, @Valid @RequestBody Account account) {
-        User user = AuthenticationService.getCurrentUser();
-        account.setUser(user);
-        accountService.update(id, account);
-    }
-
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         accountService.delete(id);

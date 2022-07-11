@@ -81,13 +81,6 @@ public class AccountService {
     }
 
     @Transactional
-    public void update(Long id, Account account) {
-        Account existingAccount = this.findById(id);
-        existingAccount.setBalance(account.getBalance());
-        accountRepository.save(existingAccount);
-    }
-
-    @Transactional
     public void updateBalance(Long id, BigDecimal newBalance) {
         Account account = this.findById(id);
         account.setBalance(newBalance);
