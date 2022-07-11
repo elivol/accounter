@@ -2,7 +2,10 @@ package com.github.elivol.accounter.model.user;
 
 import com.github.elivol.accounter.security.UserRole;
 import com.github.elivol.accounter.security.UserRoleEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,7 +19,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "app_user")
@@ -35,7 +37,7 @@ public class User implements UserDetails {
     private String password;
     private String fullName;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

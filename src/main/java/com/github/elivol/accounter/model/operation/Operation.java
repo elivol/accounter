@@ -1,5 +1,8 @@
 package com.github.elivol.accounter.model.operation;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.elivol.accounter.model.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +18,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Operation {
 
@@ -24,6 +26,7 @@ public class Operation {
     private Long id;
 
     @Column(nullable = false, updatable = false)
+    @JsonProperty("created_at")
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
@@ -32,10 +35,17 @@ public class Operation {
     private BigDecimal amount;
 
     @Column(nullable = false)
+    @JsonProperty("is_incoming")
     private Boolean isIncoming = false;
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
+    @JsonIgnore
     private Account account;
+
+    @JsonGetter("account_id")
+    public Long getAccountId() {
+        return account.getId();
+    }
 
 }

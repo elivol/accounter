@@ -31,8 +31,8 @@ public class OperationService {
     }
 
     @Transactional
-    public Operation findByIdAndAccount(Long account_id, Long id) {
-        Account account = accountService.findById(account_id);
+    public Operation findByIdAndAccount(Long accountId, Long id) {
+        Account account = accountService.findById(accountId);
         return operationRepository.findByAccountAndId(account, id).orElseThrow(
                 () -> new EntityNotFoundException(String.format(OPERATION_WITH_ID_NOT_FOUND, id))
         );
@@ -45,8 +45,8 @@ public class OperationService {
     }
 
     @Transactional
-    public void create(Long account_id, Operation operation) {
-        Account account = accountService.findById(account_id);
+    public void create(Long accountId, Operation operation) {
+        Account account = accountService.findById(accountId);
         operation.setAccount(account);
         operation.setCreatedAt(LocalDateTime.now());
         operationRepository.save(operation);
@@ -57,7 +57,7 @@ public class OperationService {
                 operation.getAmount().negate()
         ).add(account.getBalance());
 
-        accountService.updateBalance(account_id, newBalance);
+        accountService.updateBalance(accountId, newBalance);
     }
 
     @Transactional
@@ -80,8 +80,8 @@ public class OperationService {
         operationRepository.save(existingOperation);
     }
 
-    public List<Operation> findByAccountAndPeriod(Long account_id, LocalDateTime from, LocalDateTime to) {
-        Account account = accountService.findById(account_id);
+    public List<Operation> findByAccountAndPeriod(Long accountId, LocalDateTime from, LocalDateTime to) {
+        Account account = accountService.findById(accountId);
         return operationRepository.findByAccountAndPeriod(account, from, to);
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.elivol.accounter.admin.currency.AppCurrency;
 import com.github.elivol.accounter.model.exchangerate.ExchangeRate;
+import com.github.elivol.accounter.model.operation.Operation;
 import com.github.elivol.accounter.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +14,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account {
@@ -29,6 +31,10 @@ public class Account {
     @Column(nullable = false)
     @NotNull
     private BigDecimal balance;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Operation> operations = new ArrayList<>();
 
     /*
     * String 3 letters representation for currency
@@ -47,7 +53,7 @@ public class Account {
     @JsonIgnore
     private AppCurrency currency;
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
