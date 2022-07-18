@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.security;
 
-import com.github.elivol.accounter.model.user.User;
+import com.github.elivol.accounter.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
