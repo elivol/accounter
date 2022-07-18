@@ -2,7 +2,7 @@ package com.github.elivol.accounter.service.user;
 
 import com.github.elivol.accounter.exception.ConfirmationTokenNotAvailableException;
 import com.github.elivol.accounter.exception.ConfirmationTokenNotFoundException;
-import com.github.elivol.accounter.model.ConfirmationToken;
+import com.github.elivol.accounter.model.user.ConfirmationToken;
 import com.github.elivol.accounter.repository.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

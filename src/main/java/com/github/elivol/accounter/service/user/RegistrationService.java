@@ -2,8 +2,8 @@ package com.github.elivol.accounter.service.user;
 
 import com.github.elivol.accounter.dto.RegistrationRequest;
 import com.github.elivol.accounter.service.email.EmailSender;
-import com.github.elivol.accounter.model.User;
-import com.github.elivol.accounter.model.ConfirmationToken;
+import com.github.elivol.accounter.model.user.User;
+import com.github.elivol.accounter.model.user.ConfirmationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

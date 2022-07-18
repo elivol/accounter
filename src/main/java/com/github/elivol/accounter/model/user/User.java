@@ -1,7 +1,6 @@
-package com.github.elivol.accounter.model;
+package com.github.elivol.accounter.model.user;
 
 import com.github.elivol.accounter.security.UserRole;
-import com.github.elivol.accounter.security.UserRoleEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +42,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    private Set<UserRoleModel> roles = new HashSet<>();
 
     private Boolean isAccountNonExpired = false;
     private Boolean isAccountNonLocked = false;
@@ -64,7 +63,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(UserRoleEntity::getRole)
+                .map(UserRoleModel::getRole)
                 .map(UserRole::getGrantedAuthorities)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());

@@ -1,5 +1,6 @@
-package com.github.elivol.accounter.security;
+package com.github.elivol.accounter.model.user;
 
+import com.github.elivol.accounter.security.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "app_role")
-public class UserRoleEntity {
+public class UserRoleModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class UserRoleEntity {
     @Column(name = "role_name")
     private UserRole role;
 
-    public UserRoleEntity(UserRole role) {
+    public UserRoleModel(UserRole role) {
         this.role = role;
     }
 

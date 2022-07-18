@@ -1,10 +1,10 @@
 package com.github.elivol.accounter;
 
-import com.github.elivol.accounter.model.User;
+import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.service.user.UserService;
 import com.github.elivol.accounter.security.UserRole;
-import com.github.elivol.accounter.security.UserRoleEntity;
-import com.github.elivol.accounter.security.UserRoleRepository;
+import com.github.elivol.accounter.model.user.UserRoleModel;
+import com.github.elivol.accounter.repository.UserRoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class CustomCmdRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         User user = new User("admin", "admin@accounterproject.com", "admin", "admin");
-        user.getRoles().add(new UserRoleEntity(UserRole.ADMIN));
+        user.getRoles().add(new UserRoleModel(UserRole.ADMIN));
         user.setIsAccountNonExpired(true);
         user.setIsAccountNonLocked(true);
         user.setIsCredentialsNonExpired(true);

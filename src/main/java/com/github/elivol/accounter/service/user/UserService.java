@@ -3,11 +3,11 @@ package com.github.elivol.accounter.service.user;
 import com.github.elivol.accounter.dto.UserDto;
 import com.github.elivol.accounter.exception.EntityAlreadyPresentException;
 import com.github.elivol.accounter.exception.EntityNotFoundException;
-import com.github.elivol.accounter.model.User;
+import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.repository.UserRepository;
 import com.github.elivol.accounter.security.UserRole;
-import com.github.elivol.accounter.security.UserRoleEntity;
-import com.github.elivol.accounter.security.UserRoleRepository;
+import com.github.elivol.accounter.model.user.UserRoleModel;
+import com.github.elivol.accounter.repository.UserRoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
         userRoleRepository.findByRole(UserRole.USER)
                 .ifPresentOrElse(
                         role -> user.getRoles().add(role),
-                        () -> user.getRoles().add(new UserRoleEntity(UserRole.USER))
+                        () -> user.getRoles().add(new UserRoleModel(UserRole.USER))
                 );
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -1,10 +1,10 @@
 package com.github.elivol.accounter.controller.api;
 
 import com.github.elivol.accounter.hateoas.HateoasModelRelations;
-import com.github.elivol.accounter.model.User;
+import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.dto.UserDto;
 import com.github.elivol.accounter.service.user.UserService;
-import com.github.elivol.accounter.security.AuthenticationService;
+import com.github.elivol.accounter.service.user.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.bind.annotation.GetMapping;

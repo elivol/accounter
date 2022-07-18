@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.repository;
 
-import com.github.elivol.accounter.model.ConfirmationToken;
+import com.github.elivol.accounter.model.user.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,7 +1,7 @@
 package com.github.elivol.accounter.repository;
 
 import com.github.elivol.accounter.model.Account;
-import com.github.elivol.accounter.model.User;
+import com.github.elivol.accounter.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

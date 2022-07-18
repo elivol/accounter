@@ -7,7 +7,7 @@ import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.repository.AccountRepository;
 import com.github.elivol.accounter.dto.exchangerate.ExchangeRate;
 import com.github.elivol.accounter.dto.exchangerate.ExchangeRateErrorResponse;
-import com.github.elivol.accounter.model.User;
+import com.github.elivol.accounter.model.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

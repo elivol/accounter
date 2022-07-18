@@ -1,5 +1,6 @@
-package com.github.elivol.accounter.model;
+package com.github.elivol.accounter.model.user;
 
+import com.github.elivol.accounter.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
