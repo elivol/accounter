@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.dto.mapper;
 
-import com.github.elivol.accounter.dto.model.UserDto;
+import com.github.elivol.accounter.dto.model.user.UserDto;
 import com.github.elivol.accounter.model.user.User;
 
 public class UserMapper {

@@ -1,7 +1,7 @@
 package com.github.elivol.accounter.controller.api;
 
 import com.github.elivol.accounter.dto.mapper.UserMapper;
-import com.github.elivol.accounter.dto.model.UserDto;
+import com.github.elivol.accounter.dto.model.user.UserDto;
 import com.github.elivol.accounter.hateoas.assembler.UserDtoModelAssembler;
 import com.github.elivol.accounter.service.user.AuthenticationService;
 import lombok.AllArgsConstructor;

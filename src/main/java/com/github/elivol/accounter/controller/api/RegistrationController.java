@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.controller.api;
 
-import com.github.elivol.accounter.dto.model.UserRegistrationRequest;
+import com.github.elivol.accounter.dto.model.user.UserRegistrationRequest;
 import com.github.elivol.accounter.service.user.RegistrationService;
 import org.springframework.web.bind.annotation.*;
 

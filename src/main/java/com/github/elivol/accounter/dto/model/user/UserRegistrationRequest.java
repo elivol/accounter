@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.dto.model;
+package com.github.elivol.accounter.dto.model.user;
 
 import com.github.elivol.accounter.model.user.User;
 import lombok.AllArgsConstructor;
