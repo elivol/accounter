@@ -3,7 +3,7 @@ package com.github.elivol.accounter.controller.api;
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.hateoas.assembler.AccountModelAssembler;
 import com.github.elivol.accounter.dto.AccountStats;
-import com.github.elivol.accounter.hateoas.assembler.AccountStatsAssembler;
+import com.github.elivol.accounter.hateoas.assembler.AccountStatsModelAssembler;
 import com.github.elivol.accounter.service.AccountStatsService;
 import com.github.elivol.accounter.model.Operation;
 import com.github.elivol.accounter.hateoas.assembler.OperationModelAssembler;
@@ -34,7 +34,7 @@ public class AccountController {
     private final AccountModelAssembler accountModelAssembler;
     private final OperationModelAssembler operationModelAssembler;
     private final AccountStatsService accountStatsService;
-    private final AccountStatsAssembler accountStatsAssembler;
+    private final AccountStatsModelAssembler accountStatsModelAssembler;
 
 
     /*
@@ -111,7 +111,7 @@ public class AccountController {
                                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
 
         AccountStats stats = accountStatsService.stats(accountId, from, to);
-        return accountStatsAssembler.toModel(stats);
+        return accountStatsModelAssembler.toModel(stats);
     }
 
 }

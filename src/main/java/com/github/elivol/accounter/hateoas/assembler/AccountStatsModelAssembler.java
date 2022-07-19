@@ -11,7 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class AccountStatsAssembler implements RepresentationModelAssembler<AccountStats, EntityModel<AccountStats>> {
+public class AccountStatsModelAssembler implements RepresentationModelAssembler<AccountStats, EntityModel<AccountStats>> {
     @Override
     public EntityModel<AccountStats> toModel(AccountStats stats) {
         return EntityModel.of(stats,

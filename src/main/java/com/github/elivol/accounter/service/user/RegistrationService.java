@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.service.user;
 
-import com.github.elivol.accounter.dto.RegistrationRequest;
+import com.github.elivol.accounter.dto.UserRegistrationRequest;
 import com.github.elivol.accounter.service.email.EmailSender;
 import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.model.user.ConfirmationToken;
@@ -25,15 +25,8 @@ public class RegistrationService {
     private final TemplateEngine templateEngine;
 
     @Transactional
-    public String register(RegistrationRequest request, String URL) {
-        User user = userService.create(
-                new User(
-                        request.getUsername(),
-                        request.getEmail(),
-                        request.getPassword(),
-                        request.getFullName()
-                )
-        );
+    public String register(UserRegistrationRequest request, String URL) {
+        User user = userService.create(request);
 
         String token = UUID.randomUUID().toString();
 
@@ -59,16 +52,10 @@ public class RegistrationService {
 
     @Transactional
     public String confirm(String token) {
+
         ConfirmationToken confirmationToken = confirmationTokenService.validateToken(token);
-
-        User user = confirmationToken.getUser();
-        user.setIsAccountNonExpired(true);
-        user.setIsAccountNonLocked(true);
-        user.setIsCredentialsNonExpired(true);
-        user.setIsEnabled(true);
-
+        userService.confirmUser(confirmationToken.getUser());
         confirmationTokenService.updateConfirmedAt(token);
-        userService.update(user);
 
         return "confirmed";
     }

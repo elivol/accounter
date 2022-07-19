@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.controller.api;
 
-import com.github.elivol.accounter.dto.RegistrationRequest;
+import com.github.elivol.accounter.dto.UserRegistrationRequest;
 import com.github.elivol.accounter.service.user.RegistrationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String register(@Valid @RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
+    public String register(@Valid @RequestBody UserRegistrationRequest request, HttpServletRequest httpServletRequest) {
         String URL = httpServletRequest.getRequestURL().toString();
         return registrationService.register(request, URL);
     }

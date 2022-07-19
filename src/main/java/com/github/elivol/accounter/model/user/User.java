@@ -60,6 +60,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public void makeValid() {
+        this.setIsAccountNonExpired(true);
+        this.setIsAccountNonLocked(true);
+        this.setIsCredentialsNonExpired(true);
+        this.setIsEnabled(true);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
