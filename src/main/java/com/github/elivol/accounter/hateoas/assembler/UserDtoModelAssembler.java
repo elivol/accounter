@@ -3,7 +3,7 @@ package com.github.elivol.accounter.hateoas.assembler;
 import com.github.elivol.accounter.controller.api.AccountController;
 import com.github.elivol.accounter.controller.api.OperationController;
 import com.github.elivol.accounter.controller.api.UserController;
-import com.github.elivol.accounter.dto.UserDto;
+import com.github.elivol.accounter.dto.model.UserDto;
 import com.github.elivol.accounter.hateoas.HateoasModelRelations;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

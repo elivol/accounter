@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.dto.exchangerate;
+package com.github.elivol.accounter.dto.model.exchangerate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

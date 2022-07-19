@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.hateoas.assembler;
 
-import com.github.elivol.accounter.dto.AccountStats;
+import com.github.elivol.accounter.dto.model.AccountStats;
 import com.github.elivol.accounter.controller.api.AccountController;
 import com.github.elivol.accounter.hateoas.HateoasModelRelations;
 import org.springframework.hateoas.EntityModel;

@@ -1,9 +1,9 @@
 package com.github.elivol.accounter.service;
 
 import com.github.elivol.accounter.exception.ExchangeRateException;
-import com.github.elivol.accounter.dto.exchangerate.ExchangeRate;
-import com.github.elivol.accounter.dto.exchangerate.ExchangeRateErrorResponse;
-import com.github.elivol.accounter.dto.exchangerate.ExchangeRateResponse;
+import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRate;
+import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRateErrorResponse;
+import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

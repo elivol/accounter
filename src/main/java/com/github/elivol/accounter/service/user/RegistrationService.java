@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.service.user;
 
-import com.github.elivol.accounter.dto.UserRegistrationRequest;
+import com.github.elivol.accounter.dto.model.UserRegistrationRequest;
 import com.github.elivol.accounter.service.email.EmailSender;
 import com.github.elivol.accounter.model.user.User;
 import com.github.elivol.accounter.model.user.ConfirmationToken;

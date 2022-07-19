@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.dto;
+package com.github.elivol.accounter.dto.model;
 
 import com.github.elivol.accounter.model.user.User;
 

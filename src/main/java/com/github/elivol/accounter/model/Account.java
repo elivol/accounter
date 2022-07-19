@@ -2,7 +2,7 @@ package com.github.elivol.accounter.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.elivol.accounter.dto.exchangerate.ExchangeRate;
+import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRate;
 import com.github.elivol.accounter.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

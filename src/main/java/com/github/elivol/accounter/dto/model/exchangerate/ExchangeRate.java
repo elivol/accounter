@@ -1,4 +1,4 @@
-package com.github.elivol.accounter.dto.exchangerate;
+package com.github.elivol.accounter.dto.model.exchangerate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

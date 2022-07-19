@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.service;
 
-import com.github.elivol.accounter.dto.AccountStats;
+import com.github.elivol.accounter.dto.model.AccountStats;
 import com.github.elivol.accounter.model.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,6 +53,5 @@ public class AccountStatsService {
         BigDecimal balance = accountService.getCurrentBalance(accountId);
 
         return new AccountStats(from, to, income[0], outcome[0], average, balance);
-
     }
 }

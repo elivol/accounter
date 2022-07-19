@@ -2,7 +2,7 @@ package com.github.elivol.accounter.controller.api;
 
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.hateoas.assembler.AccountModelAssembler;
-import com.github.elivol.accounter.dto.AccountStats;
+import com.github.elivol.accounter.dto.model.AccountStats;
 import com.github.elivol.accounter.hateoas.assembler.AccountStatsModelAssembler;
 import com.github.elivol.accounter.service.AccountStatsService;
 import com.github.elivol.accounter.model.Operation;

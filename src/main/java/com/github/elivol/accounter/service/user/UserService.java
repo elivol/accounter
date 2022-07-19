@@ -1,6 +1,6 @@
 package com.github.elivol.accounter.service.user;
 
-import com.github.elivol.accounter.dto.UserRegistrationRequest;
+import com.github.elivol.accounter.dto.model.UserRegistrationRequest;
 import com.github.elivol.accounter.exception.EntityAlreadyPresentException;
 import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.model.user.User;
