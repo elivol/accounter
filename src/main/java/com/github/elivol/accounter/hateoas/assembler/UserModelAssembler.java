@@ -13,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class UserDtoModelAssembler implements RepresentationModelAssembler<UserDto, EntityModel<UserDto>> {
+public class UserModelAssembler implements RepresentationModelAssembler<UserDto, EntityModel<UserDto>> {
 
     @Override
     public EntityModel<UserDto> toModel(UserDto user) {

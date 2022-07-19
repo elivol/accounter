@@ -1,7 +1,9 @@
 package com.github.elivol.accounter.controller.api;
 
 import com.github.elivol.accounter.dto.mapper.AccountMapper;
+import com.github.elivol.accounter.dto.mapper.OperationMapper;
 import com.github.elivol.accounter.dto.model.AccountDto;
+import com.github.elivol.accounter.dto.model.OperationDto;
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.hateoas.assembler.AccountModelAssembler;
 import com.github.elivol.accounter.dto.model.AccountStats;
@@ -77,10 +79,11 @@ public class AccountController {
     * */
 
     @GetMapping(path = "/{account_id}/operations")
-    public CollectionModel<EntityModel<Operation>> findAccountOperations(@PathVariable("account_id") Long accountId) {
+    public CollectionModel<EntityModel<OperationDto>> findAccountOperations(@PathVariable("account_id") Long accountId) {
 
-        List<EntityModel<Operation>> operations = operationService.findAccountOperations(accountId)
+        List<EntityModel<OperationDto>> operations = operationService.findAccountOperations(accountId)
                 .stream()
+                .map(OperationMapper::toOperationDto)
                 .map(operationModelAssembler::toModel)
                 .toList();
 
@@ -91,14 +94,16 @@ public class AccountController {
     }
 
     @GetMapping(path = "/{account_id}/operations/{id}")
-    public EntityModel<Operation> findOperationByIdAndAccount(
+    public EntityModel<OperationDto> findOperationByIdAndAccount(
             @PathVariable("account_id") Long accountId,
             @PathVariable Long id) {
-        return operationModelAssembler.toModel(operationService.findByIdAndAccount(accountId, id));
+
+        return operationModelAssembler.toModel(
+                OperationMapper.toOperationDto(operationService.findByIdAndAccount(accountId, id)));
     }
 
     @PostMapping(path = "/{account_id}/operations")
-    public void createOperation(@PathVariable("account_id") Long accountId, @Valid @RequestBody Operation operation) {
+    public void createOperation(@PathVariable("account_id") Long accountId, @Valid @RequestBody OperationDto operation) {
         operationService.create(accountId, operation);
     }
 

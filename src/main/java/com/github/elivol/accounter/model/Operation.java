@@ -25,7 +25,6 @@ public class Operation {
     private Long id;
 
     @Column(nullable = false, updatable = false)
-    @JsonProperty("created_at")
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
@@ -34,17 +33,9 @@ public class Operation {
     private BigDecimal amount;
 
     @Column(nullable = false)
-    @JsonProperty("is_incoming")
     private Boolean isIncoming = false;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
-    @JsonIgnore
     private Account account;
-
-    @JsonGetter("account_id")
-    public Long getAccountId() {
-        return account.getId();
-    }
-
 }

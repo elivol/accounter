@@ -1,5 +1,6 @@
 package com.github.elivol.accounter.service;
 
+import com.github.elivol.accounter.dto.model.OperationDto;
 import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.model.Operation;
@@ -45,8 +46,12 @@ public class OperationService {
     }
 
     @Transactional
-    public void create(Long accountId, Operation operation) {
+    public void create(Long accountId, OperationDto operationDto) {
         Account account = accountService.findById(accountId);
+
+        Operation operation = new Operation();
+        operation.setAmount(operationDto.getAmount());
+        operation.setIsIncoming(operationDto.getIsIncoming());
         operation.setAccount(account);
         operation.setCreatedAt(LocalDateTime.now());
         operationRepository.save(operation);
@@ -69,13 +74,14 @@ public class OperationService {
     }
 
     @Transactional
-    public void update(Long id, Operation operation) {
+    public void update(Long id, OperationDto operationDto) {
 
         Operation existingOperation = this.findById(id);
+        Account account = accountService.findById(operationDto.getAccountId());
 
-        existingOperation.setAmount(operation.getAmount());
-        existingOperation.setIsIncoming(operation.getIsIncoming());
-        existingOperation.setAccount(operation.getAccount());
+        existingOperation.setAmount(operationDto.getAmount());
+        existingOperation.setIsIncoming(operationDto.getIsIncoming());
+        existingOperation.setAccount(account);
 
         operationRepository.save(existingOperation);
     }

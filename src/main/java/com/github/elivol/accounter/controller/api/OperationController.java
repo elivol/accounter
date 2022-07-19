@@ -1,5 +1,7 @@
 package com.github.elivol.accounter.controller.api;
 
+import com.github.elivol.accounter.dto.mapper.OperationMapper;
+import com.github.elivol.accounter.dto.model.OperationDto;
 import com.github.elivol.accounter.model.Operation;
 import com.github.elivol.accounter.hateoas.assembler.OperationModelAssembler;
 import com.github.elivol.accounter.service.OperationService;
@@ -23,10 +25,11 @@ public class OperationController {
     private final OperationModelAssembler operationModelAssembler;
 
     @GetMapping
-    public CollectionModel<EntityModel<Operation>> findAll() {
+    public CollectionModel<EntityModel<OperationDto>> findAll() {
 
-        List<EntityModel<Operation>> operations = operationService.findAll()
+        List<EntityModel<OperationDto>> operations = operationService.findAll()
                 .stream()
+                .map(OperationMapper::toOperationDto)
                 .map(operationModelAssembler::toModel)
                 .toList();
 
@@ -37,7 +40,7 @@ public class OperationController {
     }
 
     @PutMapping(path = "/{id}")
-    public void update(@PathVariable Long id, @Valid @RequestBody Operation operation) {
+    public void update(@PathVariable Long id, @Valid @RequestBody OperationDto operation) {
         operationService.update(id, operation);
     }
 
