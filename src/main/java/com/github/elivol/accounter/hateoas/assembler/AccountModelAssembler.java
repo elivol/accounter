@@ -1,6 +1,7 @@
 package com.github.elivol.accounter.hateoas.assembler;
 
 import com.github.elivol.accounter.controller.api.AccountController;
+import com.github.elivol.accounter.dto.model.AccountDto;
 import com.github.elivol.accounter.hateoas.HateoasModelRelations;
 import com.github.elivol.accounter.model.Account;
 import org.springframework.hateoas.EntityModel;
@@ -11,10 +12,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class AccountModelAssembler implements RepresentationModelAssembler<Account, EntityModel<Account>> {
+public class AccountModelAssembler implements RepresentationModelAssembler<AccountDto, EntityModel<AccountDto>> {
 
     @Override
-    public EntityModel<Account> toModel(Account account) {
+    public EntityModel<AccountDto> toModel(AccountDto account) {
         return EntityModel.of(
                 account,
                 linkTo(methodOn(AccountController.class).findById(account.getId())).withSelfRel(),

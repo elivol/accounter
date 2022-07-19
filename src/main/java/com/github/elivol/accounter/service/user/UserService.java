@@ -44,7 +44,11 @@ public class UserService implements UserDetailsService {
     public User createWithRoles(UserRegistrationRequest userRequest, Set<UserRoleModel> roles) {
 
         // check for user
-        User user = userRequest.user();
+        User user = new User(
+                userRequest.getUsername(),
+                userRequest.getEmail(),
+                userRequest.getPassword(),
+                userRequest.getFullName());
 
         boolean userExistsByEmail = userRepository.findByEmail(user.getEmail()).isPresent();
         boolean userExistsByUsername = userRepository.findByUsername(user.getUsername()).isPresent();

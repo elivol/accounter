@@ -29,8 +29,4 @@ public class UserRegistrationRequest {
 
     @Size(min = 2, max = 300)
     private String fullName;
-
-    public User user() {
-        return new User(username, email, password, fullName);
-    }
 }

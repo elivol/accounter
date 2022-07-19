@@ -30,41 +30,16 @@ public class Account {
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Operation> operations = new ArrayList<>();
 
-    /*
-    * String 3 letters representation for currency
-    * Received from user's request, then transformed to AppCurrency object
-    * */
-    @JsonProperty("currency")
-    @NotNull
-    @Transient
-    private String currencyString;
-
-    /*
-    * Currency DTO
-    * */
     @OneToOne
     @JoinColumn(name = "currency_id")
-    @JsonIgnore
     private AppCurrency currency;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     @Transient
-    @JsonIgnore
     private ExchangeRate exchangeRate;
-
-    /*
-    * Gets the result of the request to exchange rate service
-    * */
-    @JsonProperty("exchange_rate")
-    public ExchangeRate getExchangeRate() {
-        return exchangeRate;
-    }
-
 }

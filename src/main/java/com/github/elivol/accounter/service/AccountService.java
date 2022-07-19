@@ -1,13 +1,17 @@
 package com.github.elivol.accounter.service;
 
+import com.github.elivol.accounter.dto.mapper.AccountMapper;
+import com.github.elivol.accounter.dto.model.AccountDto;
 import com.github.elivol.accounter.exception.CurrencyIsNotSupportedException;
 import com.github.elivol.accounter.exception.EntityNotFoundException;
 import com.github.elivol.accounter.exception.ExchangeRateException;
 import com.github.elivol.accounter.model.Account;
+import com.github.elivol.accounter.model.AppCurrency;
 import com.github.elivol.accounter.repository.AccountRepository;
 import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRate;
 import com.github.elivol.accounter.dto.model.exchangerate.ExchangeRateErrorResponse;
 import com.github.elivol.accounter.model.user.User;
+import com.github.elivol.accounter.service.user.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +43,6 @@ public class AccountService {
                 .stream()
                 .peek(a -> {
                     a.setExchangeRate(rate(a.getCurrency().getCurrencyCode()));
-                    a.setCurrencyString(a.getCurrency().getCurrencyCode());
                 })
                 .collect(Collectors.toList());
     }
@@ -49,7 +52,6 @@ public class AccountService {
                 () -> new EntityNotFoundException(String.format(ACCOUNT_WITH_ID_NOT_FOUND, id))
         );
 
-        account.setCurrencyString(account.getCurrency().getCurrencyCode());
         account.setExchangeRate(rate(account.getCurrency().getCurrencyCode()));
         return account;
     }
@@ -59,8 +61,8 @@ public class AccountService {
     }
 
     @Transactional
-    public Account create(Account account) {
-        String currencyString = account.getCurrencyString().toUpperCase();
+    public Account create(AccountDto accountDto) {
+        String currencyString = accountDto.getCurrency().toUpperCase();
         boolean isSupported = appCurrencyService.getSupportedCurrencies().stream()
                 .anyMatch(c -> c.getCurrencyCode().equalsIgnoreCase(currencyString));
 
@@ -68,7 +70,11 @@ public class AccountService {
             throw new CurrencyIsNotSupportedException(String.format(CURRENCY_IS_NOT_SUPPORTED, currencyString));
         }
 
+        Account account = new Account();
+        account.setBalance(accountDto.getBalance());
+        account.setUser(AuthenticationService.getCurrentUser());
         account.setCurrency(appCurrencyService.findByCurrencyCode(currencyString));
+
         return accountRepository.save(account);
     }
 
@@ -86,5 +92,4 @@ public class AccountService {
         account.setBalance(newBalance);
         accountRepository.save(account);
     }
-
 }

@@ -1,5 +1,7 @@
 package com.github.elivol.accounter.controller.api;
 
+import com.github.elivol.accounter.dto.mapper.AccountMapper;
+import com.github.elivol.accounter.dto.model.AccountDto;
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.hateoas.assembler.AccountModelAssembler;
 import com.github.elivol.accounter.dto.model.AccountStats;
@@ -41,11 +43,12 @@ public class AccountController {
     * Actions with accounts
     * */
     @GetMapping
-    public CollectionModel<EntityModel<Account>> findAll() {
+    public CollectionModel<EntityModel<AccountDto>> findAll() {
         User user = AuthenticationService.getCurrentUser();
 
-        List<EntityModel<Account>> accounts = accountService.findByUser(user)
+        List<EntityModel<AccountDto>> accounts = accountService.findByUser(user)
                 .stream()
+                .map(AccountMapper::toAccountDto)
                 .map(accountModelAssembler::toModel)
                 .toList();
 
@@ -53,15 +56,13 @@ public class AccountController {
     }
 
     @GetMapping(path = "/{id}")
-    public EntityModel<Account> findById(@PathVariable Long id) {
+    public EntityModel<AccountDto> findById(@PathVariable Long id) {
         Account account = accountService.findById(id);
-        return accountModelAssembler.toModel(account);
+        return accountModelAssembler.toModel(AccountMapper.toAccountDto(account));
     }
 
     @PostMapping
-    public void create(@Valid @RequestBody Account account) {
-        User user = AuthenticationService.getCurrentUser();
-        account.setUser(user);
+    public void create(@Valid @RequestBody AccountDto account) {
         accountService.create(account);
     }
 
