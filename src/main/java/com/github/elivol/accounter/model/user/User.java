@@ -34,6 +34,8 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+
+    @Column(name = "fullname")
     private String fullName;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -48,6 +50,11 @@ public class User implements UserDetails {
     private Boolean isAccountNonLocked = false;
     private Boolean isCredentialsNonExpired = false;
     private Boolean isEnabled = false;
+
+    public User(Long id, String username, String email, String password, String fullName) {
+        this(username, email, password, fullName);
+        this.id = id;
+    }
 
     public User(String username, String email, String fullName) {
         this.username = username;

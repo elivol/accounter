@@ -22,7 +22,7 @@ public class AppCurrency {
     private Long id;
 
     @NotNull
-    @Column(unique = true)
+    @Column(name = "currency_code", unique = true)
     private String currencyCode;
 
     public AppCurrency(String currencyCode) {

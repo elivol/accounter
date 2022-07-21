@@ -66,14 +66,14 @@ public class AccountService {
         boolean isSupported = appCurrencyService.getSupportedCurrencies().stream()
                 .anyMatch(c -> c.getCurrencyCode().equalsIgnoreCase(currencyString));
 
-        if (!isSupported){
+        if (!isSupported) {
             throw new CurrencyIsNotSupportedException(String.format(CURRENCY_IS_NOT_SUPPORTED, currencyString));
         }
 
-        Account account = new Account();
-        account.setBalance(accountDto.getBalance());
-        account.setUser(AuthenticationService.getCurrentUser());
-        account.setCurrency(appCurrencyService.findByCurrencyCode(currencyString));
+        Account account = new Account()
+                .setBalance(accountDto.getBalance())
+                .setUser(AuthenticationService.getCurrentUser())
+                .setCurrency(appCurrencyService.findByCurrencyCode(currencyString));
 
         return accountRepository.save(account);
     }
@@ -88,8 +88,7 @@ public class AccountService {
 
     @Transactional
     public void updateBalance(Long id, BigDecimal newBalance) {
-        Account account = this.findById(id);
-        account.setBalance(newBalance);
+        Account account = this.findById(id).setBalance(newBalance);
         accountRepository.save(account);
     }
 }

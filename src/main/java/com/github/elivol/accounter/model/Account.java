@@ -7,6 +7,7 @@ import com.github.elivol.accounter.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "account")
