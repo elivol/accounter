@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -28,7 +27,7 @@ class AccountRepositoryTest {
     private static AppCurrency currency;
 
     @BeforeAll
-    static void init() throws SQLException {
+    static void init() {
 
         // setting user
         user = new User(
