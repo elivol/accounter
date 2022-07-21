@@ -7,11 +7,13 @@ import com.github.elivol.accounter.model.user.UserRoleModel;
 import com.github.elivol.accounter.security.UserRole;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,6 +25,7 @@ class AccountRepositoryTest {
     @Autowired
     private AccountRepository underTest;
 
+    private Account account;
     private static User user;
     private static AppCurrency currency;
 
@@ -45,17 +48,20 @@ class AccountRepositoryTest {
         currency.setId(1L);
     }
 
+    @BeforeEach
+    void setUp() {
+        // setting account
+        BigDecimal balance = BigDecimal.valueOf(1500);
+        account = new Account()
+                .setBalance(balance)
+                .setCurrency(currency)
+                .setUser(user);
+    }
+
     @Test
     void canGetCurrentBalance() {
 
         // given
-        BigDecimal balance = BigDecimal.valueOf(1500);
-
-        Account account = new Account()
-                .setBalance(balance)
-                .setCurrency(currency)
-                .setUser(user);
-
         Account saved = underTest.save(account);
 
         // when
@@ -63,6 +69,20 @@ class AccountRepositoryTest {
 
         // then
         assertThat(currentBalance.isPresent()).isTrue();
-        assertThat(currentBalance.get()).isCloseTo(balance, Offset.offset(BigDecimal.ZERO));
+        assertThat(currentBalance.get()).isCloseTo(saved.getBalance(), Offset.offset(BigDecimal.ZERO));
+    }
+
+    @Test
+    void canFindByUser() {
+
+        // given
+        Account saved = underTest.save(account);
+
+        // when
+        List<Account> accounts = underTest.findByUser(user);
+
+        // then
+        assertThat(accounts).hasSize(1);
+        assertThat(accounts.stream()).allMatch(a -> a.getUser().equals(user));
     }
 }
