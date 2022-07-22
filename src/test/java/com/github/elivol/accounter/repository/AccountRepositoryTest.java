@@ -3,8 +3,6 @@ package com.github.elivol.accounter.repository;
 import com.github.elivol.accounter.model.Account;
 import com.github.elivol.accounter.model.AppCurrency;
 import com.github.elivol.accounter.model.user.User;
-import com.github.elivol.accounter.model.user.UserRoleModel;
-import com.github.elivol.accounter.security.UserRole;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +27,7 @@ class AccountRepositoryTest {
     private static AppCurrency currency;
 
     @BeforeAll
-    static void init() {
+    static void beforeAll() {
 
         // setting user
         user = new User(
@@ -39,9 +36,6 @@ class AccountRepositoryTest {
                 "user@test.com",
                 "pswd",
                 "User");
-
-        Set<UserRoleModel> userRoles = Set.of(new UserRoleModel(1L, UserRole.USER));
-        user.setRoles(userRoles);
 
         // setting currency
         currency = new AppCurrency("RUB");
