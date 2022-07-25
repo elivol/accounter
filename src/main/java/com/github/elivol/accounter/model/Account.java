@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -44,4 +45,21 @@ public class Account {
 
     @Transient
     private ExchangeRate exchangeRate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) &&
+                Objects.equals(balance, account.balance) &&
+                Objects.equals(currency, account.currency) &&
+                Objects.equals(user, account.user) &&
+                Objects.equals(exchangeRate, account.exchangeRate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, balance, currency, user, exchangeRate);
+    }
 }

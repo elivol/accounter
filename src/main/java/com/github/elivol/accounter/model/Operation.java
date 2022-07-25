@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -38,4 +39,21 @@ public class Operation {
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operation operation = (Operation) o;
+        return Objects.equals(id, operation.id) &&
+                Objects.equals(createdAt, operation.createdAt) &&
+                Objects.equals(amount, operation.amount) &&
+                Objects.equals(isIncoming, operation.isIncoming) &&
+                Objects.equals(account, operation.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, createdAt, amount, isIncoming, account);
+    }
 }

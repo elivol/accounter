@@ -41,13 +41,13 @@ public class AppCurrency {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AppCurrency that = (AppCurrency) o;
-        return id != null && Objects.equals(id, that.id);
+        return Objects.equals(id, that.id) && Objects.equals(currencyCode, that.currencyCode);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, currencyCode);
     }
 }
