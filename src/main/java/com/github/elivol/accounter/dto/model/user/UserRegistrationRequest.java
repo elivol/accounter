@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode
 public class UserRegistrationRequest {
 
@@ -29,4 +28,13 @@ public class UserRegistrationRequest {
 
     @Size(min = 2, max = 300)
     private String fullName;
+
+    @Override
+    public String toString() {
+        return "UserRegistrationRequest{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
+    }
 }

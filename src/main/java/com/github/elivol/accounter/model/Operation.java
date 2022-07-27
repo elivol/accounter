@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.elivol.accounter.model.Account;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Operation {
 
@@ -40,6 +42,13 @@ public class Operation {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    public Operation(LocalDateTime createdAt, BigDecimal amount, Boolean isIncoming, Account account) {
+        this.createdAt = createdAt;
+        this.amount = amount;
+        this.isIncoming = isIncoming;
+        this.account = account;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,5 +64,16 @@ public class Operation {
     @Override
     public int hashCode() {
         return Objects.hash(id, createdAt, amount, isIncoming, account);
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", createdAt=" + createdAt +
+                ", amount=" + amount +
+                ", isIncoming=" + isIncoming +
+                ", account=" + account +
+                '}';
     }
 }

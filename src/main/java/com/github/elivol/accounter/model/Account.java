@@ -62,4 +62,13 @@ public class Account {
     public int hashCode() {
         return Objects.hash(id, balance, currency, user, exchangeRate);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", balance=" + balance +
+                ", currency=" + currency +
+                '}';
+    }
 }

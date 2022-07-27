@@ -4,7 +4,6 @@ import com.github.elivol.accounter.security.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "app_user")
 public class User implements UserDetails {
@@ -134,5 +132,15 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, email, password, fullName, roles, isAccountNonExpired, isAccountNonLocked, isCredentialsNonExpired, isEnabled);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                '}';
     }
 }
